@@ -17,7 +17,9 @@ clone_if_missing() {
     local commit="$3"
     if [ ! -e "$path/.git" ]; then
         rm -rf "$path"
-        git clone --filter=blob:none "$url" "$path"
+        # Use a complete clone: the patch steps inspect the checked-out source
+        # tree, and partial clones can leave missing blobs in CI environments.
+        git clone "$url" "$path"
     fi
     if ! git -C "$path" cat-file -e "$commit^{commit}" 2>/dev/null; then
         git -C "$path" fetch --depth=1 origin "$commit"
