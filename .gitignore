@@ -53,6 +53,9 @@ dist/
 # Render deployment output (assembled from the pinned submodules at build time)
 public/
 
+# Fallback submodule clones used by the Render build when gitlinks are absent
+third_party/
+
 # OS specific
 .DS_Store
 Thumbs.db
