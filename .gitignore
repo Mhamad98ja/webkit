@@ -50,6 +50,9 @@ webkit-autoloader-host.spec
 build/
 dist/
 
+# Render deployment output (assembled from the pinned submodules at build time)
+public/
+
 # OS specific
 .DS_Store
 Thumbs.db

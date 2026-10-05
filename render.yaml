@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: ps5-webkit-autoloader
+    runtime: python
+    plan: free
+    buildCommand: bash render-build.sh
+    startCommand: python3 pc-host/host.py --no-dns --no-https --no-update-check --http-port $PORT --base public --overrides /tmp/ps5-wkal-overrides
+    healthCheckPath: /app/index.html
