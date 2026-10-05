@@ -8,6 +8,9 @@ cd "$ROOT"
 # contain only .gitmodules (without gitlink entries). Support both layouts.
 git submodule update --init --recursive
 
+# GitHub commits created on Windows may not preserve executable bits.
+chmod +x tools/*.sh tools/check_exploit_js.py
+
 clone_if_missing() {
     local path="$1"
     local url="$2"
