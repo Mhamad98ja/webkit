@@ -58,9 +58,14 @@ if git apply --check "$PATCH" 2>/dev/null; then
     git add -A
     git commit -q -m "Apply WKAL autoloader patch"
     echo "slopkit: copied to $DEST and autoloader patch applied."
+elif git apply --3way --whitespace=nowarn "$PATCH" 2>/dev/null; then
+    git add -A
+    git commit -q -m "Apply WKAL autoloader patch (three-way)"
+    echo "slopkit: copied to $DEST and autoloader patch applied with three-way merge."
 elif git apply --reverse --check "$PATCH" 2>/dev/null; then
     echo "slopkit: autoloader patch is already applied."
 else
+    git reset --hard HEAD >/dev/null 2>&1 || true
     echo "Error: patch does not apply cleanly to $DEST."
     echo "slopkit has likely changed upstream — regenerate patches/slopkit-autoload.patch:"
     echo "  git -C $SOURCE diff > $PATCH"
