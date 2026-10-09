@@ -58,6 +58,10 @@ if git apply --check "$PATCH" 2>/dev/null; then
     git add -A
     git commit -q -m "Apply WKAL autoloader patch"
     echo "slopkit: copied to $DEST and autoloader patch applied."
+elif git apply --ignore-space-change --ignore-whitespace "$PATCH" 2>/dev/null; then
+    git add -A
+    git commit -q -m "Apply WKAL autoloader patch (whitespace-tolerant)"
+    echo "slopkit: copied to $DEST and autoloader patch applied with whitespace tolerance."
 elif git apply --3way --whitespace=nowarn "$PATCH" 2>/dev/null; then
     git add -A
     git commit -q -m "Apply WKAL autoloader patch (three-way)"

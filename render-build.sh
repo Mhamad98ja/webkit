@@ -21,10 +21,12 @@ clone_if_missing() {
         # tree, and partial clones can leave missing blobs in CI environments.
         git clone "$url" "$path"
     fi
+    git -C "$path" config core.autocrlf false
+    git -C "$path" config core.eol lf
     if ! git -C "$path" cat-file -e "$commit^{commit}" 2>/dev/null; then
         git -C "$path" fetch --depth=1 origin "$commit"
     fi
-    git -C "$path" checkout --detach "$commit"
+    git -C "$path" checkout --force --detach "$commit"
 }
 
 clone_if_missing third_party/ps5-unified-autoloader https://github.com/itsPLK/ps5-unified-autoloader.git 915a65e232e03e293829e34bca18866659b2bcf4
