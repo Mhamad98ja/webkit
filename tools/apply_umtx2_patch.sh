@@ -64,9 +64,18 @@ if git apply --check "$PATCH" 2>/dev/null; then
     git add -A
     git commit -q -m "Apply WKAL autoloader patch"
     echo "umtx2: copied to $DEST and autoloader patch applied."
+elif git apply --ignore-space-change --ignore-whitespace "$PATCH" 2>/dev/null; then
+    git add -A
+    git commit -q -m "Apply WKAL autoloader patch (whitespace-tolerant)"
+    echo "umtx2: copied to $DEST and autoloader patch applied with whitespace tolerance."
+elif git apply --3way --whitespace=nowarn "$PATCH" 2>/dev/null; then
+    git add -A
+    git commit -q -m "Apply WKAL autoloader patch (three-way)"
+    echo "umtx2: copied to $DEST and autoloader patch applied with three-way merge."
 elif git apply --reverse --check "$PATCH" 2>/dev/null; then
     echo "umtx2: autoloader patch is already applied."
 else
+    git reset --hard HEAD >/dev/null 2>&1 || true
     echo "Error: patch does not apply cleanly to $DEST."
     echo "umtx2 has likely changed upstream — regenerate patches/umtx2-autoload.patch:"
     echo "  git -C $SOURCE diff > $PATCH"
